@@ -1,4 +1,5 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,29 +8,56 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-const RegisterForm = ({ type }) => (
-  <View style={styles.container}>
-    <TextInput
-      style={styles.inputBox}
-      underlineColorAndroid="rgba(0,0,0,0)"
-      placeholder="NIK"
-      placeholderTextColor="#ffffff"
-      selectionColor="#fff"
-      keyboardType="email-address"
-      // onSubmitEditing={() => this.password.focus()}
-    />
-    <TextInput
-      style={styles.inputBox}
-      underlineColorAndroid="rgba(0,0,0,0)"
-      placeholder="Email"
-      placeholderTextColor="#ffffff"
-      // ref={(input) => this.password = input}
-    />
-    <TouchableOpacity style={styles.button}>
-      <Text style={styles.buttonText}>{type}</Text>
-    </TouchableOpacity>
-  </View>
-);
+import { API_URL } from '../utils/constant';
+
+const sendRegist = async (NIK, email) => {
+  try {
+    const body = {
+      NIK,
+      email,
+    };
+    const { data } = await axios.post(`${API_URL}employees/register`, body);
+    console.log(data);
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
+
+const RegisterForm = ({ type }) => {
+  const [NIK, setNIK] = useState('');
+  const [email, setEmail] = useState('');
+  const [err, setErr] = useState('');
+  return (
+    <View style={styles.container}>
+      <TextInput
+        style={styles.inputBox}
+        underlineColorAndroid="rgba(0,0,0,0)"
+        placeholder="NIK"
+        placeholderTextColor="#ffffff"
+        selectionColor="#fff"
+        onChangeText={text => setNIK(text)}
+        value={NIK}
+        // onSubmitEditing={() => this.password.focus()}
+      />
+      <TextInput
+        style={styles.inputBox}
+        underlineColorAndroid="rgba(0,0,0,0)"
+        placeholder="Email"
+        placeholderTextColor="#ffffff"
+        onChangeText={text => setEmail(text)}
+        value={email}
+        // ref={(input) => this.password = input}
+      />
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => sendRegist(NIK, email)}
+      >
+        <Text style={styles.buttonText}>{type}</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

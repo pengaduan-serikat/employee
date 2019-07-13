@@ -1,10 +1,11 @@
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
 import Auth from '../containers/auth';
+import HomeContainer from '../containers/home';
 
 const AppSwitchNavigator = createSwitchNavigator({
   Auth,
-  // Register,
+  Home: HomeContainer,
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator);

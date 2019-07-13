@@ -20,8 +20,8 @@ const mapDispatchToProps = dispatch => ({
   registerAction: (payload) => {
     dispatch(registerAction(payload));
   },
-  loginAction: (payload) => {
-    dispatch(loginAction(payload));
+  loginAction: (payload, navigation) => {
+    dispatch(loginAction(payload, navigation));
   }
 });
 
@@ -63,7 +63,7 @@ class Auth extends Component {
 
     if (loginForm) {
       if (NIK && password) {
-        props.loginAction({ NIK, password });
+        props.loginAction({ NIK, password }, props.navigation);
       } else {
         this.setState({
           errMsg: 'NIK atau password tidak boleh kosong',

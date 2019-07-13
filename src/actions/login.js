@@ -14,14 +14,17 @@ export default (payload, navigation) => async (dispatch) => {
       password: payload.password,
     };
 
-    const { data } = await axios.post(`${API_URL}/employees/login`, body);
-
+    const { data } = await axios.post(`${API_URL}employees/login`, body);
+    console.log(data);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: data,
     });
     navigation.navigate('Home');
+    // console.log(navigation);
   } catch (error) {
+    console.log(error);
+    // console.log(error.response.data);
     dispatch({
       type: LOGIN_ERROR,
       payload: error.message,

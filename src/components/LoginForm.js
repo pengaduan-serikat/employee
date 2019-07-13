@@ -6,8 +6,16 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+import { scale } from '../utils/scaling';
 
-const LoginForm = ({ type }) => (
+const LoginForm = ({
+  loginForm,
+  NIK,
+  email,
+  password,
+  onChangeInput,
+  authSend,
+}) => (
   <View style={styles.container}>
     <TextInput
       style={styles.inputBox}
@@ -16,27 +24,46 @@ const LoginForm = ({ type }) => (
       placeholderTextColor="#ffffff"
       selectionColor="#fff"
       keyboardType="email-address"
-      // onSubmitEditing={() => this.password.focus()}
+      value={NIK}
+      onChangeText={text => onChangeInput(text, 'NIK')}
     />
-    <TextInput
-      style={styles.inputBox}
-      underlineColorAndroid="rgba(0,0,0,0)"
-      placeholder="Password"
-      secureTextEntry
-      placeholderTextColor="#ffffff"
-      // ref={(input) => this.password = input}
-    />
-    <TouchableOpacity style={styles.button}>
-      <Text style={styles.buttonText}>{type}</Text>
+    {
+      loginForm ? (
+        <TextInput
+          style={styles.inputBox}
+          underlineColorAndroid="rgba(0,0,0,0)"
+          placeholder="Password"
+          secureTextEntry
+          placeholderTextColor="#ffffff"
+          value={password}
+          onChangeText={text => onChangeInput(text, 'password')}
+        />
+      ) : (
+        <TextInput
+          style={styles.inputBox}
+          underlineColorAndroid="rgba(0,0,0,0)"
+          placeholder="Email"
+          placeholderTextColor="#ffffff"
+          value={email}
+          onChangeText={text => onChangeInput(text, 'email')}
+        />
+      )
+    }
+    <TouchableOpacity
+      style={styles.button}
+      onPress={authSend}
+    >
+      <Text style={styles.buttonText}>{loginForm ? 'Login' : 'Register'}</Text>
     </TouchableOpacity>
   </View>
 );
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
+    // flexGrow: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingVertical: scale(30),
   },
 
   inputBox: {

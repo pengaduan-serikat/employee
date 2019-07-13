@@ -11,18 +11,16 @@ export default (payload, navigation) => async (dispatch) => {
   try {
     const body = {
       NIK: payload.NIK,
-      email: payload.email,
+      password: payload.password,
     };
 
     const { data } = await axios.post(`${API_URL}/employees/login`, body);
 
-    if (data) {
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: data,
-      });
-      navigation.navigate('Home');
-    }
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: data,
+    });
+    navigation.navigate('Home');
   } catch (error) {
     dispatch({
       type: LOGIN_ERROR,
